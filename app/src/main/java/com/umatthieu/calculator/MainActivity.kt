@@ -28,11 +28,25 @@ class MainActivity : AppCompatActivity() {
         tvMinus.setOnClickListener { appendOnExpression("-", false) }
         tvDivide.setOnClickListener { appendOnExpression("/", false) }
         tvMultiply.setOnClickListener { appendOnExpression("*", false) }
+        tvOpen.setOnClickListener { appendOnExpression("(", false) }
+        tvClose.setOnClickListener { appendOnExpression(")", false) }
 
+        tvClear.setOnClickListener {
+            tvExpression.text = ""
+            tvResult.text = ""
+        }
+
+        tvBack.setOnClickListener {
+            val string = tvExpression.text.toString()
+            if(string.isNotEmpty()) {
+                tvExpression.text = string.substring(0, string.length-1)
+            }
+            tvResult.text = ""
+        }
 
     }
 
-    fun appendOnExpression(var string: String, var canClear : Boolean) {
+    fun appendOnExpression(string: String, canClear : Boolean) {
         if (canClear) {
             tvResult.text = ""
             tvExpression.append(string)
