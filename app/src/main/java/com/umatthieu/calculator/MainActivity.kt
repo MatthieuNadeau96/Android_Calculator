@@ -2,7 +2,10 @@ package com.umatthieu.calculator
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
+import net.objecthunter.exp4j.ExpressionBuilder
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,6 +45,22 @@ class MainActivity : AppCompatActivity() {
                 tvExpression.text = string.substring(0, string.length-1)
             }
             tvResult.text = ""
+        }
+
+        tvEquals.setOnClickListener {
+            try {
+
+                val expression = ExpressionBuilder(tvExpression.text.toString()).build()
+                val result = expression.evaluate()
+                val longResult = result.toLong()
+                if(result == longResult.toDouble())
+                    tvResult.text = longResult.toString()
+                else
+                    tvResult.text = result.toString()
+
+            } catch (e:Exception) {
+                Log.d("Exception", "message: " + e.message)
+            }
         }
 
     }
